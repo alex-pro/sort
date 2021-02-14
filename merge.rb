@@ -4,7 +4,7 @@ def merge(left, right)
   result = []
 
   while left.any? && right.any?
-    if left.first <= right.first
+    if left[0] <= right[0]
       result << left.shift
     else
       result << right.shift
@@ -46,5 +46,5 @@ def test
   puts "Result last 10 elements: #{result.last(10)}"
 end
 
-# ~2.8 seconds
+# ~2.3 seconds
 test
