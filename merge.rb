@@ -1,22 +1,6 @@
 @array = Array.new(1_000_000) { rand(50) }
 
-def sort(array)
-  return array if array.size <= 1
-
-  left = []
-  right = []
-
-  array.each_with_index do |el, index|
-    if index < (array.size / 2)
-      left << el
-    else
-      right << el
-    end
-  end
-
-  left = sort(left)
-  right = sort(right)
-
+def merge(left, right)
   result = []
 
   while left.any? && right.any?
@@ -42,6 +26,21 @@ def sort(array)
   result
 end
 
+def sort(array)
+  return array if array.size <= 1
+
+  size = array.size
+  half_size = size / 2
+
+  left = array[0...half_size]
+  right = array[half_size..size]
+
+  left = sort(left)
+  right = sort(right)
+
+  merge(left, right)
+end
+
 def test
   tmp = Time.now
   result = sort(@array)
@@ -51,5 +50,5 @@ def test
   puts "Result last 10 elements: #{result.last(10)}"
 end
 
-# ~4.6 seconds
+# ~3.1 seconds
 test
